@@ -44,6 +44,13 @@ function App() {
         novaPalavra[i] = letra
         setPalavraExibida(novaPalavra)
         }
+    }setContador(contador+1)
+    if(contador===5){
+      setContador(6)
+      setPalavraExibida(palavraEscolhida)
+      setColor("red")
+      setdisableGlobal(true)
+
     }
     console.log(contador)
   }
