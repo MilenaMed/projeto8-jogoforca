@@ -1,6 +1,11 @@
 import React from "react";
 
-function Jogo({StartJogo,disableGlobal, palavraExibida,contador, color, palavraEscolhida}) {
+function Jogo({StartJogo,disableGlobal,setdisableGlobal, palavraExibida,setPalavraExibida,acertos,palavraSorteada,contador, color, setColor,palavraEscolhida}) {
+  if(contador===6){
+    setColor("red")
+    setPalavraExibida(palavraEscolhida)
+    setdisableGlobal(true)
+  }
 
   return (
     <div className="conteiner">

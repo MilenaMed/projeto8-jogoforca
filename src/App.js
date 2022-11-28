@@ -6,27 +6,35 @@ import { useState } from "react";
 import palavra from "./palavras";
 
 function App() {
-  const [palavraEscolhida, setpalavraEscolhida] = useState(palavra[Math.floor(Math.random() * palavra.length)]);
+  const [palavraEscolhida, setpalavraEscolhida] = useState();
   const [palavraExibida, setPalavraExibida] = useState([]);
   const [disableGlobal, setdisableGlobal] = useState(true);
   const [letrasClicadas, setClicadas] = useState([]);
-  const palavraSorteada = palavraEscolhida.split('');
+  const [palavraSorteada, setPalavraSorteada] = useState("");
   const [chuteDado, setchuteDado] = useState("");
-  let [contador, setContador] = useState(0);
-  let [color, setColor] = useState("")
+  const [contador, setContador] = useState(0);
+  const [color, setColor] = useState("");
+  const [acertos, setAcertos] = useState(1);
 
   function StartJogo() {
-    if(disableGlobal===true){
-    console.log(palavraSorteada)
-    console.log(palavraEscolhida)
-    setColor("")
-    setContador(0)
-    setClicadas([])
-    let palavraSecreta = "_".repeat(palavraSorteada.length).split('');
-    setPalavraExibida(palavraSecreta);
-    setdisableGlobal(false)
+    if (disableGlobal === true) {
+      //console.log("sorteada", palavraSorteada)
+      //console.log("palavraEScolhida1", palavraEscolhida)e
+      setColor("");
+      setContador(0);
+      setClicadas([]);
+
+      let novaPalavra = palavra[Math.floor(Math.random() * palavra.length)]
+      setpalavraEscolhida(novaPalavra);
+      setPalavraSorteada(novaPalavra.split(''));
+
+      console.log(novaPalavra)
+
+      let palavraSecreta = "_".repeat(novaPalavra.length).split('');
+      setPalavraExibida(palavraSecreta);
+      setdisableGlobal(false)
+    }
   }
-}
 
   function letraClicada(letra) {
     const novoArray = [...letrasClicadas]
@@ -38,25 +46,29 @@ function App() {
   }
 
   function VerificarPalavra(letra) {
+    let flegContador = true
     for (let i = 0; i < palavraSorteada.length; i++) {
       if (letra === palavraSorteada[i]) {
         let novaPalavra = palavraExibida
         novaPalavra[i] = letra
         setPalavraExibida(novaPalavra)
-        }
-    }setContador(contador+1)
-    if(contador===5){
-      setContador(6)
-      setPalavraExibida(palavraEscolhida)
-      setColor("red")
-      setdisableGlobal(true)
-
+        console.log("novaPAlavra", novaPalavra)
+        console.log("palavraSorteada", palavraSorteada)
+        flegContador = false
+      }
     }
-    console.log(contador)
+    if (flegContador === true) {
+      setContador(contador + 1)
+      console.log(contador)
+    }
+    else if (!palavraExibida.includes("_")) {
+        setColor("verde")
+        setdisableGlobal(true)
+      }
   }
 
   function Chutar() {
-    if (chuteDado == palavraEscolhida) {
+    if (chuteDado === palavraEscolhida) {
       console.log("ganhou")
       setPalavraExibida(palavraEscolhida)
       setColor("verde")
@@ -77,12 +89,17 @@ function App() {
     <>
       <div className="conteinerGeral">
         <Jogo
-        disableGlobal={disableGlobal}
+          disableGlobal={disableGlobal}
+          setdisableGlobal={setdisableGlobal}
+          acertos={acertos}
+          setColor={setColor}
           color={color}
           contador={contador}
+          palavraSorteada={palavraSorteada}
           letraClicada={letraClicada}
           StartJogo={StartJogo}
           palavraExibida={palavraExibida}
+          setPalavraExibida={setPalavraExibida}
           palavraEscolhida={palavraEscolhida}
           chuteDado={chuteDado} />
         <Letras
