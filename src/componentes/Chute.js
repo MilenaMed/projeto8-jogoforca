@@ -1,11 +1,11 @@
- import React, { useState } from "react";
+import React, { useState } from "react";
 
- function Chute(){
+function Chute() {
   const palavra = "abcd"
-  const [chuteDado, setchuteDado]= useState("")
+  const [chuteDado, setchuteDado] = useState("")
 
-  function Chutar(){
-    if(chuteDado === palavra){
+  function Chutar() {
+    if (chuteDado === palavra) {
       console.log("ganhou")
       //vai no comp jogo,  na div "palavrasecreta" e coloca a palavra em verde
     } else {
@@ -13,14 +13,30 @@
       // troca a imagem da forca pra forca06 e mostra a palavra correta em vermelho
     }
   }
-  function salvarChute(event){  
+  function salvarChute(event) {
     setchuteDado(event.target.value)
   }
-    return(
-        <div className="chute">
-      Já sei a palavra! <input data-test="guess-input" onChange={salvarChute} className="texto" type="text" name="Nome" size="40" /> <button data-test="guess-button" onClick={Chutar} className="chutar">chutar</button>
+  return (
+    <div className="chute">
+      Já sei a palavra!
+      <input
+        data-test="guess-input"
+        onChange={salvarChute}
+        className="texto"
+        type="text"
+        name="Nome"
+        size="40"
+      />
+      <button
+        data-test="guess-button"
+        className="chutar"
+        onClick={Chutar}
+        disabled={true}
+      >
+        chutar
+      </button>
     </div>
-    )
- }
+  )
+}
 
- export default Chute
+export default Chute

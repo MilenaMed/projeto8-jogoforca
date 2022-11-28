@@ -1,29 +1,21 @@
 import React from "react";
-import Letras from "./Letras";
-import { useState } from "react";
 
-const palavra = "Abacate"
+function Jogo({StartJogo, palavraExibida}) {
+  const imagemforca = ["forca0", "forca1", "forca2"]
 
-function Jogo(){
-  function StartJogo(){
-    <Letras />
-    //mudar a cor das teclas ao iniciar
-    //escolher uma palavra   
-  }
-
-    return(
-        <div className="conteiner">
+  return (
+    <div className="conteiner">
       <div className="forca">
-        <img className="forca img" src="./assets/forca0.png"></img>
+        <img data-test="game-image" className="forca img" src={`./assets/${imagemforca[0]}.png`}></img>
       </div>
       <div className="ladoesquerdo">
-      <button data-test="choose-word" className="palavra" onClick={StartJogo}> Escolher palavra</button>
-      <div className="palavrasecreta">
-        _ _ _ _ _ _ _ _ _
-      </div>
+        <button data-test="choose-word" className="palavra" onClick={StartJogo}> Escolher palavra</button>
+        <div data-test="word" className="palavrasecreta">
+          {palavraExibida}
+        </div>
       </div>
     </div>
-    )
+  )
 }
 
 export default Jogo
