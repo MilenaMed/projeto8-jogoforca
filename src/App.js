@@ -8,7 +8,7 @@ function App() {
   <palavras/>
   return (
     <>
-    <div class="conteinerGeral">
+    <div className="conteinerGeral">
     <Jogo/>
     <Letras/>
     <Chute/>
