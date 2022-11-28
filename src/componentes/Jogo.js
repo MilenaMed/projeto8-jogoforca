@@ -1,16 +1,15 @@
 import React from "react";
 
-function Jogo({StartJogo, palavraExibida}) {
-  const imagemforca = ["forca0", "forca1", "forca2"]
+function Jogo({StartJogo,disableGlobal, palavraExibida,contador, color}) {
 
   return (
     <div className="conteiner">
       <div className="forca">
-        <img data-test="game-image" className="forca img" src={`./assets/${imagemforca[0]}.png`}></img>
+        <img data-test="game-image" className="forca img" src={`./assets/forca${contador}.png`}></img>
       </div>
       <div className="ladoesquerdo">
-        <button data-test="choose-word" className="palavra" onClick={StartJogo}> Escolher palavra</button>
-        <div data-test="word" className="palavrasecreta">
+        <button data-test="choose-word" className="palavra" disabled={disableGlobal === false} onClick={StartJogo}> Escolher palavra</button>
+        <div data-test="word" className={`palavrasecreta ${color}`}>
           {palavraExibida}
         </div>
       </div>

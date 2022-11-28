@@ -6,19 +6,27 @@ import { useState } from "react";
 import palavra from "./palavras";
 
 function App() {
-  const palavraEscolhida = palavra[Math.floor(Math.random() * palavra.length)];
+  const [palavraEscolhida, setpalavraEscolhida] = useState(palavra[Math.floor(Math.random() * palavra.length)]);
   const [palavraExibida, setPalavraExibida] = useState([]);
-  const [disableGlobal, setdisableGlobal] = useState(true)
-  const [letrasClicadas, setClicadas] = useState([])
-  const [contador, setContador] = useState(0)
-  const [palavraSorteada, setPalavraSorteada] = useState(palavraEscolhida.split(''))
-  
+  const [disableGlobal, setdisableGlobal] = useState(true);
+  const [letrasClicadas, setClicadas] = useState([]);
+  const palavraSorteada = palavraEscolhida.split('');
+  const [chuteDado, setchuteDado] = useState("");
+  let [contador, setContador] = useState(0);
+  let [color, setColor] = useState("")
+
   function StartJogo() {
+    if(disableGlobal===true){
     console.log(palavraSorteada)
+    console.log(palavraEscolhida)
+    setColor("")
+    setContador(0)
+    setClicadas([])
     let palavraSecreta = "_".repeat(palavraSorteada.length).split('');
     setPalavraExibida(palavraSecreta);
     setdisableGlobal(false)
   }
+}
 
   function letraClicada(letra) {
     const novoArray = [...letrasClicadas]
@@ -29,29 +37,57 @@ function App() {
     }
   }
 
-  function VerificarPalavra(letra){
-    for(let i=0; i<palavraSorteada.length; i++){
-      if(letra === palavraSorteada[i]){
-        let novaPalavra = palavraExibida        
+  function VerificarPalavra(letra) {
+    for (let i = 0; i < palavraSorteada.length; i++) {
+      if (letra === palavraSorteada[i]) {
+        let novaPalavra = palavraExibida
         novaPalavra[i] = letra
         setPalavraExibida(novaPalavra)
-      }
+        }
     }
+    console.log(contador)
+  }
+
+  function Chutar() {
+    if (chuteDado == palavraEscolhida) {
+      console.log("ganhou")
+      setPalavraExibida(palavraEscolhida)
+      setColor("verde")
+      setdisableGlobal(true)
+    } else {
+      console.log("perdeu")
+      setContador(6)
+      setPalavraExibida(palavraEscolhida)
+      setColor("red")
+      setdisableGlobal(true)
+    }
+  }
+  function salvarChute(event) {
+    setchuteDado(event.target.value)
   }
 
   return (
     <>
       <div className="conteinerGeral">
         <Jogo
+        disableGlobal={disableGlobal}
+          color={color}
+          contador={contador}
           letraClicada={letraClicada}
           StartJogo={StartJogo}
-          palavraExibida={palavraExibida} />
+          palavraExibida={palavraExibida}
+          palavraEscolhida={palavraEscolhida}
+          chuteDado={chuteDado} />
         <Letras
           letraClicada={letraClicada}
           letrasClicadas={letrasClicadas}
           disableGlobal={disableGlobal} />
         <Chute
-          disableGlobal={disableGlobal} />
+          Chutar={Chutar}
+          salvarChute={salvarChute}
+          disableGlobal={disableGlobal}
+        />
+
       </div>
     </>
   )

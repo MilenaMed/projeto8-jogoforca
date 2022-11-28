@@ -47,6 +47,12 @@ body{
   justify-content: center;
   align-items: center;
 }
+.red{
+  color: red;
+}
+.verde{
+  color: #27AE60;
+}
 .ativada{
   color: #39739D;
   background-color:  #E1ECF4;
